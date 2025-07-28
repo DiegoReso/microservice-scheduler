@@ -14,7 +14,7 @@ import java.util.Date;
 public class JwtUtil {
 
 
-    private final String secretKey = "sua-chave-secreta-super-segura-que-deve-ser-bem-longa";
+    private final String secretKey = "c3VhLWNoYXZlLXNlY3JldGEtc3VwZXItc2VndXJhLXF1ZS1kZXZlLXNlci1iZW0tbG9uZ2E=";
 
     public String generateToken(String username) {
         return Jwts.builder()
