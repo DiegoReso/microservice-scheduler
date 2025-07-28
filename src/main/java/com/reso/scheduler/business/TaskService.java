@@ -17,9 +17,9 @@ import java.time.LocalDateTime;
 public class TaskService {
 
     private final TaskRepository taskRepository;
-    private TaskConverter taskConverter;
-    private JwtUtil jwtUtil;
-    private TaskUpdateConverter taskUpdateConverter;
+    private final TaskConverter taskConverter;
+    private final JwtUtil jwtUtil;
+    private final TaskUpdateConverter taskUpdateConverter;
 
     public TaskDTO createTask(String token, TaskDTO dto) {
         String email = jwtUtil.extractUsername(token.substring(7));
