@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,8 +29,16 @@ public class TaskService {
         dto.setStatusTaskEnum(StatusTaskEnum.PENDING);
         dto.setUserEmail(email);
         TaskEntity entity = taskConverter.toTaskEntity(dto);
-
         return taskConverter.toTaskDTO(taskRepository.save(entity));
     }
+
+    public List<TaskDTO> getTaskByPeriod(LocalDateTime eventDateAfter, LocalDateTime eventDateBefore, StatusTaskEnum statusTaskEnum) {
+        return taskRepository.findByEventDateBetweenAndStatusTaskEnum(eventDateAfter,eventDateBefore,statusTaskEnum).stream().map(taskConverter::toTaskDTO).collect(Collectors.toList());
+    }
+
+    public List<TaskDTO>  getTaskByEmail(String email){
+        return taskRepository.findByUserEmail(email).stream().map(taskConverter::toTaskDTO).toList();
+    }
+
 
 }
