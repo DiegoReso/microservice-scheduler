@@ -17,4 +17,6 @@ public interface TaskRepository extends MongoRepository<TaskEntity, String> {
                                                              StatusTaskEnum statusTaskEnum);
 
     List<TaskEntity> findByUserEmail(String email);
+
+    boolean existsById(String id);
 }

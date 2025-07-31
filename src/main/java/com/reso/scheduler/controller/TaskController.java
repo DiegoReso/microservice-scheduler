@@ -22,7 +22,7 @@ public class TaskController {
     @PostMapping
     public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO taskDTO,
                                               @RequestHeader("Authorization") String token) {
-        return ResponseEntity.ok(taskService.createTask(token,taskDTO ));
+        return ResponseEntity.ok(taskService.createTask(token, taskDTO));
     }
 
     @GetMapping("/events")
@@ -30,14 +30,30 @@ public class TaskController {
             @RequestParam("eventAfter") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss") LocalDateTime eventAfter,
             @RequestParam("eventBefore") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss") LocalDateTime eventBefore,
             @RequestParam("status") StatusTaskEnum statusTaskEnum) {
-        List<TaskDTO> listTaskDTO = taskService.getTaskByPeriod(eventAfter,eventBefore,statusTaskEnum);
+        List<TaskDTO> listTaskDTO = taskService.getTaskByPeriod(eventAfter, eventBefore, statusTaskEnum);
         return ResponseEntity.ok(listTaskDTO);
     }
 
     @GetMapping("/search-by-email")
-    public ResponseEntity<List<TaskDTO>> getTaskByEmail(@RequestParam("email") String email){
+    public ResponseEntity<List<TaskDTO>> getTaskByEmail(@RequestParam("email") String email) {
         List<TaskDTO> listTaskDTO = taskService.getTaskByEmail(email);
         return ResponseEntity.ok(listTaskDTO);
+    }
+
+    @DeleteMapping()
+    public ResponseEntity<Void> deleteTaskById(@RequestParam("id") String id) {
+        taskService.deleteTaskById(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping
+    public ResponseEntity<TaskDTO> updateStatusTask(@RequestParam("status") StatusTaskEnum statusTaskEnum, @RequestParam("id") String id) {
+        return ResponseEntity.ok(taskService.updateStatusTask(id, statusTaskEnum));
+    }
+
+    @PutMapping
+    public ResponseEntity<TaskDTO> updateTask(@RequestBody TaskDTO taskDTO, @RequestParam("id") String id) {
+        return ResponseEntity.ok(taskService.updateTask(taskDTO, id));
     }
 
 }
