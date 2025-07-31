@@ -44,20 +44,20 @@ public class TaskService {
     public void deleteTaskById(String id) {
 
         if (!taskRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Task id: '" + id + "' was not found ");
+            throw new ResourceNotFoundException("Task id: '" + id + "' not found ");
         }
         taskRepository.deleteById(id);
     }
 
     public TaskDTO updateStatusTask(String id, StatusTaskEnum statusTaskEnum) {
-         TaskEntity entity =  taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task id: '" + id + "' was not found"));
+         TaskEntity entity =  taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task id: '" + id + "' not found"));
          entity.setStatusTaskEnum(statusTaskEnum);
          TaskEntity entityUpdated = taskRepository.save(entity);
          return taskConverter.toTaskDTO(entityUpdated);
     }
 
     public TaskDTO updateTask(TaskDTO dto, String id){
-        TaskEntity entity = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task id: '" + id + "' was not found"));
+        TaskEntity entity = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task id: '" + id + "' not found"));
         taskUpdateConverter.updateTask(dto, entity);
         return taskConverter.toTaskDTO(entity);
     }
